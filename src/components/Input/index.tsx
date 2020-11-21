@@ -45,7 +45,7 @@ const Input: React.FC<Props> = ({
           className={variant}
           id={fieldName}
           name={fieldName}
-          inputRef={inputRef}
+          ref={inputRef}
           defaultValue={defaultValue}
           mask={mask}
           {...rest}
