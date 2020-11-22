@@ -7,7 +7,7 @@ const Home: React.FC = () => {
   return (
     <Container>
       <h1>Home</h1>
-      <Link to="/jobs">Jobs</Link>
+      <Link to="/funcoes">Jobs</Link>
     </Container>
   );
 };
