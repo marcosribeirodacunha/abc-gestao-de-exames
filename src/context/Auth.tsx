@@ -52,6 +52,7 @@ const AuthProvider: React.FC = ({ children }) => {
       localStorage.setItem('@abc:token', data.token);
       api.defaults.headers.authorization = data.token;
 
+      setUser(storageUser);
       setLoading(false);
     } catch (error) {
       if (error.response) throw error.response;
