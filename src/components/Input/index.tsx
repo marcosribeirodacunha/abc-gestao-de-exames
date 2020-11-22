@@ -1,22 +1,22 @@
 import React, { useEffect, useRef } from 'react';
 import { MdErrorOutline } from 'react-icons/md';
-import ReactInputMask, { Props as InputMaskProps } from 'react-input-mask';
 
 import { useField } from '@unform/core';
 
-import { Container } from './styles';
+import { Container, Error } from './styles';
 
-interface Props extends Partial<InputMaskProps> {
+interface Props {
   name: string;
   label?: string;
   variant?: 'default' | 'white';
 }
 
-const Input: React.FC<Props> = ({
+type InputProps = JSX.IntrinsicElements['input'] & Props;
+
+const Input: React.FC<InputProps> = ({
   label,
   name,
   variant = 'default',
-  mask = '',
   ...rest
 }) => {
   const inputRef = useRef(null);
@@ -27,12 +27,6 @@ const Input: React.FC<Props> = ({
       name: fieldName,
       ref: inputRef.current,
       path: 'value',
-      setValue(ref, value: string) {
-        ref.setInputValue(value);
-      },
-      clearValue(ref) {
-        ref.setInputValue('');
-      },
     });
   }, [fieldName, registerField]);
 
@@ -41,16 +35,19 @@ const Input: React.FC<Props> = ({
       {label && <label htmlFor={fieldName}>{label}</label>}
 
       <div>
-        <ReactInputMask
+        <input
           className={variant}
+          ref={inputRef}
           id={fieldName}
           name={fieldName}
-          ref={inputRef}
           defaultValue={defaultValue}
-          mask={mask}
           {...rest}
         />
-        {error && <MdErrorOutline size={24} />}
+        {error && (
+          <Error title={error}>
+            <MdErrorOutline size={24} />
+          </Error>
+        )}
       </div>
     </Container>
   );

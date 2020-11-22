@@ -54,7 +54,7 @@ const AuthProvider: React.FC = ({ children }) => {
 
       setLoading(false);
     } catch (error) {
-      if (error.response) throw error.response.data;
+      if (error.response) throw error.response;
       else throw error;
     }
   }, []);

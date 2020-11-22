@@ -34,4 +34,42 @@ export default createGlobalStyle`
     font-weight: 600;
     line-height: 1.5;
   }
+
+  /* React-toastify customization */
+  .Toastify {
+    &__progress-bar {
+      margin: 4px;
+      width: calc(100% - 8px);
+      border-radius: 8px;
+      height: 4px;
+
+      &--default {
+        background: ${props => props.theme.colors.secondary};
+
+      }
+    }
+
+    &__toast {
+    border-radius: ${props => props.theme.radius};
+    box-shadow: ${props => props.theme.shadow};
+    padding: 12px 12px 16px 16px;
+
+      &--default {
+        color: ${props => props.theme.colors.dark}
+      }
+
+      &--error {
+        background-color: ${props => props.theme.colors.error}
+      }
+
+      &-body {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 400;
+        line-height: 1.5;
+        margin-right: 12px;
+      }
+    }
+
+  }
+
 `;

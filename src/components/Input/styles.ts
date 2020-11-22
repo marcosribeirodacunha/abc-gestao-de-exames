@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+import Tooltip from '../Tooltip';
+
 export const Container = styled.div<{ hasError: boolean }>`
   & + div {
     margin-top: 1rem;
@@ -46,15 +48,22 @@ export const Container = styled.div<{ hasError: boolean }>`
       props.hasError &&
       css`
         border-color: ${props.theme.colors.error};
-        padding-right: 40px;
+        padding-right: 42px;
       `}
   }
+`;
+
+export const Error = styled(Tooltip).attrs({
+  variant: 'error',
+})`
+  position: absolute !important;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 24px;
 
   svg {
-    position: absolute;
     color: ${props => props.theme.colors.error};
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
+    cursor: pointer;
   }
 `;
