@@ -78,7 +78,7 @@ const Categories: React.FC = () => {
   const handleDelete = async (id: string) => {
     try {
       await api.delete(`categories/${id}`);
-      setCategories(state => state.filter(job => job.id !== id));
+      setCategories(state => state.filter(category => category.id !== id));
       setCategoryToDelete(-1);
     } catch (error) {
       if (error.response) {
@@ -100,12 +100,12 @@ const Categories: React.FC = () => {
             <strong>Nome</strong>
           </header>
           <main>
-            {categories.map((job, index) => (
+            {categories.map((category, index) => (
               <div
-                key={job.id}
+                key={category.id}
                 className={categoryToDelete === index ? 'deleting' : ''}
               >
-                <p>{job.name}</p>
+                <p>{category.name}</p>
                 <span>
                   {categoryToDelete === index ? (
                     <>
@@ -117,7 +117,7 @@ const Categories: React.FC = () => {
                       <FabButton
                         icon={MdCheck}
                         variant="success"
-                        onClick={() => handleDelete(job.id)}
+                        onClick={() => handleDelete(category.id)}
                       />
                     </>
                   ) : (
