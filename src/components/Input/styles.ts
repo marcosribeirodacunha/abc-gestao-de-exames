@@ -10,6 +10,11 @@ export const Container = styled.div<{ hasError: boolean }>`
   label {
     display: block;
     margin-bottom: 6px;
+
+    span {
+      color: ${props => props.theme.colors.dark_disabled};
+      font-size: ${props => props.theme.sizes.x_small};
+    }
   }
 
   > div {

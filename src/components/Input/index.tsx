@@ -8,6 +8,7 @@ import { Container, Error } from './styles';
 interface Props {
   name: string;
   label?: string;
+  tip?: string;
   variant?: 'default' | 'white';
 }
 
@@ -15,6 +16,7 @@ type InputProps = JSX.IntrinsicElements['input'] & Props;
 
 const Input: React.FC<InputProps> = ({
   label,
+  tip,
   name,
   variant = 'default',
   ...rest
@@ -32,7 +34,11 @@ const Input: React.FC<InputProps> = ({
 
   return (
     <Container hasError={!!error}>
-      {label && <label htmlFor={fieldName}>{label}</label>}
+      {label && (
+        <label htmlFor={fieldName}>
+          {label} {tip && <span>({tip})</span>}
+        </label>
+      )}
 
       <div>
         <input
