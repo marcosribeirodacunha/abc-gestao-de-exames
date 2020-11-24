@@ -5,7 +5,7 @@ import Layout from '../pages/_layout/Private';
 import Categories from '../pages/Categories';
 import EmployeesCreate from '../pages/EmployeesCreate';
 import EmployeesList from '../pages/EmployeesList';
-// import ExamsCreate from '../pages/ExamsCreate';
+import ExamsCreate from '../pages/ExamsCreate';
 import ExamsList from '../pages/ExamsList';
 import ExamTypes from '../pages/ExamTypes';
 import Home from '../pages/Home';
@@ -25,7 +25,7 @@ const PrivateRoutes: React.FC = () => {
         <Route path="/funcionarios/inserir" component={EmployeesCreate} />
 
         <Route path="/exames" exact component={ExamsList} />
-        {/* <Route path="/exames/inserir" component={ExamsCreate} /> */}
+        <Route path="/exames/inserir" component={ExamsCreate} />
 
         <Route render={() => <Redirect to="/" />} />
       </Switch>

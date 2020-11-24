@@ -21,6 +21,10 @@ export const Container = styled.div<{ hasError: boolean }>`
     position: relative;
   }
 
+  .react-datepicker-wrapper {
+    width: 100%;
+  }
+
   input {
     width: 100%;
     border-radius: ${props => props.theme.radius};
