@@ -1,12 +1,23 @@
-import React from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import logo from '../../assets/logo.svg';
 import useAuth from '../../hooks/useAuth';
-import { Container, Content } from './styles';
+import { Container, Content, Dropdown } from './styles';
 
 const Header: React.FC = () => {
   const { signOut } = useAuth();
+  const location = useLocation();
+  const [openedDropdown, setOpenedDropdown] = useState('');
+
+  useEffect(() => {
+    setOpenedDropdown('');
+  }, [location]);
+
+  function handleOpenDropdown(id: string) {
+    if (openedDropdown === id) setOpenedDropdown('');
+    else setOpenedDropdown(id);
+  }
 
   return (
     <Container>
@@ -18,7 +29,21 @@ const Header: React.FC = () => {
             Início
           </NavLink>
           <NavLink to="/exames">Exames</NavLink>
-          <NavLink to="/funcionarios">Funcionários</NavLink>
+          <Dropdown isOpen={openedDropdown === 'employeeDropdown'}>
+            <button
+              type="button"
+              onClick={() => handleOpenDropdown('employeeDropdown')}
+              onFocus={() => handleOpenDropdown('employeeDropdown')}
+            >
+              Funcionários
+            </button>
+            <div>
+              <NavLink to="/funcionarios" exact>
+                Registrados
+              </NavLink>
+              <NavLink to="/funcionarios/inserir">Inserir</NavLink>
+            </div>
+          </Dropdown>
           <NavLink to="/funcoes">Funções</NavLink>
           <NavLink to="/tipos-de-exames">Tipos</NavLink>
           <NavLink to="/categorias">Categorias</NavLink>

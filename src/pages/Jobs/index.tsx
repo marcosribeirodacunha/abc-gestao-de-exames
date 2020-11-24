@@ -10,14 +10,10 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import FabButton from '../../components/FabButton';
 import Input from '../../components/Input';
+import Job from '../../interfaces/job';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Content, JobsTable, CreateForm } from './styles';
-
-interface Job {
-  id: string;
-  name: string;
-}
 
 const Jobs: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);

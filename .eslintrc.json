@@ -54,6 +54,8 @@
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
     "react/jsx-one-expression-per-line": "off",
+    "no-param-reassign": "off",
+    "no-template-curly-in-string": "off",
     "jsx-a11y/label-has-associated-control": [
       2,
       {
