@@ -10,14 +10,10 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import FabButton from '../../components/FabButton';
 import Input from '../../components/Input';
+import Category from '../../interfaces/category';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Content, CategoriesTable, CreateForm } from './styles';
-
-interface Category {
-  id: string;
-  name: string;
-}
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);

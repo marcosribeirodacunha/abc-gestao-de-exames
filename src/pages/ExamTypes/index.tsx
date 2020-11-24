@@ -10,15 +10,10 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import FabButton from '../../components/FabButton';
 import Input from '../../components/Input';
+import ExamType from '../../interfaces/examType';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
 import { Container, Content, ExamTypesTable, CreateForm } from './styles';
-
-interface ExamType {
-  id: string;
-  name: string;
-  expiration: number;
-}
 
 const ExamTypes: React.FC = () => {
   const [examTypes, setExamTypes] = useState<ExamType[]>([]);

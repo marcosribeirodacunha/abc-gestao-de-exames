@@ -21,7 +21,6 @@ interface FilterData {
 
 const EmployeesList: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
-  const submitButtonRef = useRef<HTMLButtonElement>(null);
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -41,22 +40,20 @@ const EmployeesList: React.FC = () => {
     loadEmployees();
   }, []);
 
-  const handleSubmitFilter: SubmitHandler<FilterData> = useCallback(
-    async data => {
-      try {
-        console.log(data);
-        const response = await api.get('users', { params: data });
-        setEmployees(response.data);
-      } catch (error) {
-        if (error.response) toast.error(error.response.data.message);
-        else
-          toast.error(
-            'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
-          );
-      }
-    },
-    []
-  );
+  const handleSubmit: SubmitHandler<FilterData> = useCallback(async data => {
+    try {
+      const response = await api.get('users', { params: data });
+      setEmployees(response.data);
+    } catch (error) {
+      if (error.response) toast.error(error.response.data.message);
+      else
+        toast.error('Um erro inexperado ocorreu. Por favor, tente mais tarde!');
+    }
+  }, []);
+
+  function submitForm() {
+    formRef.current?.submitForm();
+  }
 
   if (!jobs || !employees) return <h1>Loading...</h1>;
 
@@ -69,18 +66,18 @@ const EmployeesList: React.FC = () => {
           Para realizar a filtragem dos dados preencha um ou mais campos abaixo.
         </p>
 
-        <Form ref={formRef} onSubmit={handleSubmitFilter}>
+        <Form ref={formRef} onSubmit={handleSubmit}>
           <Input
             label="Funcionário"
             name="name"
             variant="white"
-            onKeyUp={debounce(() => formRef.current?.submitForm(), 1000)}
+            onKeyUp={debounce(submitForm, 1000)}
           />
           <Input
             label="Matrícula"
             name="regist_number"
             variant="white"
-            onKeyUp={debounce(() => formRef.current?.submitForm(), 1000)}
+            onKeyUp={debounce(submitForm, 1000)}
           />
           <Select
             label="Função"
@@ -90,6 +87,7 @@ const EmployeesList: React.FC = () => {
               label: job.name,
             }))}
             variant="white"
+            onChange={debounce(submitForm, 1)}
           />
         </Form>
       </Filters>

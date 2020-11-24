@@ -28,7 +28,23 @@ const Header: React.FC = () => {
           <NavLink exact to="/">
             Início
           </NavLink>
-          <NavLink to="/exames">Exames</NavLink>
+
+          <Dropdown isOpen={openedDropdown === 'examsDropdown'}>
+            <button
+              type="button"
+              onClick={() => handleOpenDropdown('examsDropdown')}
+              onFocus={() => handleOpenDropdown('examsDropdown')}
+            >
+              Exames
+            </button>
+            <div>
+              <NavLink to="/exames" exact>
+                Registrados
+              </NavLink>
+              <NavLink to="/exames/inserir">Inserir</NavLink>
+            </div>
+          </Dropdown>
+
           <Dropdown isOpen={openedDropdown === 'employeeDropdown'}>
             <button
               type="button"
@@ -44,6 +60,7 @@ const Header: React.FC = () => {
               <NavLink to="/funcionarios/inserir">Inserir</NavLink>
             </div>
           </Dropdown>
+
           <NavLink to="/funcoes">Funções</NavLink>
           <NavLink to="/tipos-de-exames">Tipos</NavLink>
           <NavLink to="/categorias">Categorias</NavLink>

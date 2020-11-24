@@ -24,7 +24,7 @@ export const Container = styled.div<{ hasError: boolean }>`
   input {
     width: 100%;
     border-radius: ${props => props.theme.radius};
-    padding: 10px 16px;
+    padding: 8px 16px;
     border: 2px solid transparent;
     transition: 0.2s ease-out;
 

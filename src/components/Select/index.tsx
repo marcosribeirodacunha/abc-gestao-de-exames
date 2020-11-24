@@ -62,6 +62,7 @@ const Select: React.FC<Props> = ({
           defaultValue={defaultValue}
           placeholder={placeholder || 'Selecione uma opção'}
           classNamePrefix="react-select"
+          isClearable
           {...rest}
         />
         {error && (

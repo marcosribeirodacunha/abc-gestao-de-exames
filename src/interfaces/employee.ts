@@ -1,3 +1,5 @@
+import Job from './job';
+
 export default interface Employee {
   id: string;
   name: string;
@@ -7,8 +9,5 @@ export default interface Employee {
   registrationNumber: string;
   isAdmin: boolean;
   photo: string;
-  job: {
-    id: string;
-    name: string;
-  };
+  job: Job;
 }

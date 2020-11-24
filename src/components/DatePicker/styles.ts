@@ -19,61 +19,51 @@ export const Container = styled.div<{ hasError: boolean }>`
 
   > div {
     position: relative;
+  }
 
-    .default > .react-select__control {
+  input {
+    width: 100%;
+    border-radius: ${props => props.theme.radius};
+    padding: 8px 16px;
+    border: 2px solid transparent;
+    transition: 0.2s ease-out;
+
+    &.default {
       background-color: ${props => props.theme.colors.light};
     }
 
-    .white > .react-select__control {
+    &.white {
       background-color: ${props => props.theme.colors.white};
       box-shadow: ${props => props.theme.shadow};
     }
-  }
 
-  .react-select {
-    &__control {
-      cursor: pointer;
-      width: 100%;
-      border-radius: ${props => props.theme.radius};
-      border: 2px solid transparent;
-
-      ${props =>
-        props.hasError &&
-        css`
-          border-color: ${props.theme.colors.error};
-          padding-right: 32px;
-        `}
-
-      &--is-focused,
-      &:hover {
-        border-color: ${props => props.theme.colors.secondary};
-      }
+    &:focus {
+      border-color: ${props => props.theme.colors.secondary};
     }
 
-    &__option {
-      padding: 10px 16px;
-      cursor: pointer;
-
-      &--is-focused {
-        background: ${props => props.theme.colors.light};
-      }
-
-      &--is-selected {
-        background: ${props => props.theme.colors.secondary};
-      }
+    &:disabled {
+      opacity: 0.65;
     }
 
-    &__value-container {
-      padding: 4px 14px;
-    }
-
-    &__placeholder {
+    &::placeholder {
       color: ${props => props.theme.colors.dark_disabled};
     }
+
+    ${props =>
+      props.hasError &&
+      css`
+        border-color: ${props.theme.colors.error};
+        padding-right: 42px;
+      `}
+  }
+
+  .react-datepicker__close-icon::after {
+    background: transparent;
+    font-size: 24px;
+    padding-top: 5px;
+    color: ${props => props.theme.colors.light_disabled};
   }
 `;
-
-/* Tooltip for errors */
 
 export const Error = styled(Tooltip).attrs({
   variant: 'error',
