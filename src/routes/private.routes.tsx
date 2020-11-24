@@ -4,6 +4,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Layout from '../pages/_layout/Private';
 import Categories from '../pages/Categories';
 import EmployeesCreate from '../pages/EmployeesCreate';
+import EmployeesList from '../pages/EmployeesList';
 import ExamTypes from '../pages/ExamTypes';
 import Home from '../pages/Home';
 import Jobs from '../pages/Jobs';
@@ -16,6 +17,7 @@ const PrivateRoutes: React.FC = () => {
         <Route path="/funcoes" component={Jobs} />
         <Route path="/categorias" component={Categories} />
         <Route path="/tipos-de-exames" component={ExamTypes} />
+        <Route path="/funcionarios" exact component={EmployeesList} />
         <Route path="/funcionarios/inserir" component={EmployeesCreate} />
 
         <Route render={() => <Redirect to="/" />} />
