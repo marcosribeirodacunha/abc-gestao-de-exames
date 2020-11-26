@@ -1,5 +1,8 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdChevronRight } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { FormHandles, SubmitHandler } from '@unform/core';
@@ -21,6 +24,7 @@ interface FilterData {
 
 const EmployeesList: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
@@ -53,6 +57,10 @@ const EmployeesList: React.FC = () => {
 
   function submitForm() {
     formRef.current?.submitForm();
+  }
+
+  function handleNavigateToDetails(id: string) {
+    history.push(`funcionarios/${id}`);
   }
 
   if (!jobs || !employees) return <h1>Loading...</h1>;
@@ -102,7 +110,10 @@ const EmployeesList: React.FC = () => {
         </header>
         <main>
           {employees.map(employee => (
-            <div key={employee.id}>
+            <div
+              key={employee.id}
+              onClick={() => handleNavigateToDetails(employee.id)}
+            >
               <p>{employee.name}</p>
               <p>{employee.cpf}</p>
               <p>{employee.registrationNumber}</p>

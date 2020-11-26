@@ -92,8 +92,8 @@ const ExamsCreate: React.FC = () => {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
           formRef.current?.setErrors(errors);
-        } else if (error.data) {
-          toast.error(error.data.message);
+        } else if (error.response) {
+          toast.error(error.response.data.message);
         } else {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
