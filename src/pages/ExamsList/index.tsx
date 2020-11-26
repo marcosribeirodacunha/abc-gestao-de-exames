@@ -1,5 +1,8 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { MdChevronRight } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { FormHandles, SubmitHandler } from '@unform/core';
@@ -25,6 +28,7 @@ interface FilterData {
 
 const ExamsList: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const history = useHistory();
 
   const [jobs, setJobs] = useState<Job[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -58,7 +62,6 @@ const ExamsList: React.FC = () => {
 
   const handleSubmit: SubmitHandler<FilterData> = useCallback(async data => {
     try {
-      console.log(data);
       const response = await api.get('exams', { params: data });
       setExams(response.data);
     } catch (error) {
@@ -70,6 +73,10 @@ const ExamsList: React.FC = () => {
 
   function submitForm() {
     formRef.current?.submitForm();
+  }
+
+  function handleNavigateToDetails(id: string) {
+    history.push(`exames/${id}`);
   }
 
   if (!jobs || !categories || !examTypes || !exams) return <h1>Loading...</h1>;
@@ -158,7 +165,7 @@ const ExamsList: React.FC = () => {
         </header>
         <main>
           {exams.map(exam => (
-            <div key={exam.id}>
+            <div key={exam.id} onClick={() => handleNavigateToDetails(exam.id)}>
               <p>{exam.employee.name}</p>
               <p>{exam.employee.job.name}</p>
               <p>{exam.type.name}</p>
