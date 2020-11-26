@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 import { FormHandles, SubmitHandler } from '@unform/core';
 import { Form } from '@unform/web';
+import { isAfter } from 'date-fns';
 import * as Yup from 'yup';
 
 import Button from '../../components/Button';
@@ -66,7 +67,17 @@ const ExamsCreate: React.FC = () => {
           employee: Yup.string().required(),
           type: Yup.string().required(),
           category: Yup.string().required(),
-          date: Yup.mixed().nullable(),
+          date: Yup.mixed()
+            .nullable()
+            .test(
+              'is-before-today',
+              'Deve ser anterior ao dia de hoje',
+              value => {
+                if (value === null) return true;
+                if (isAfter(value, new Date())) return false;
+                return true;
+              }
+            ),
         });
 
         await schema.validate(data, { abortEarly: false });
@@ -125,7 +136,11 @@ const ExamsCreate: React.FC = () => {
             label: category.name,
           }))}
         />
-        <DatePicker label="Data de realização" name="date" />
+        <DatePicker
+          label="Data de realização"
+          name="date"
+          maxDate={new Date()}
+        />
         <p>
           Obs.: Se a data não for informada, será registrado o nomento do
           cadastro

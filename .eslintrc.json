@@ -50,6 +50,7 @@
     "no-use-before-define": "off",
     "@typescript-eslint/no-use-before-define": "warn",
     "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/no-explicit-any": "off",
     "camelcase": "off",
     "react/jsx-props-no-spreading": "off",
     "react/prop-types": "off",
