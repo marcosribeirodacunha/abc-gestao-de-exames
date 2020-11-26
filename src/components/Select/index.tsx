@@ -43,6 +43,12 @@ const Select: React.FC<Props> = ({
         }
         return ref.state.value.value;
       },
+      setValue(ref: any, value: OptionTypeBase) {
+        ref.select.selectOption(value);
+      },
+      clearValue: (ref: any) => {
+        ref.select.clearValue();
+      },
     });
   }, [fieldName, registerField, rest.isMulti]);
 

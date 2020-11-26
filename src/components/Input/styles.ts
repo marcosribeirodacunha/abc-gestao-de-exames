@@ -42,7 +42,8 @@ export const Container = styled.div<{ hasError: boolean }>`
     }
 
     &:disabled {
-      opacity: 0.65;
+      background-color: ${props => props.theme.colors.light_disabled};
+      color: ${props => props.theme.colors.dark_disabled};
     }
 
     &::placeholder {

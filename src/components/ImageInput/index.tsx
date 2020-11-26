@@ -17,7 +17,7 @@ interface Props {
 }
 type InputProps = JSX.IntrinsicElements['input'] & Props;
 
-const ImageInput: React.FC<InputProps> = ({ name, ...rest }) => {
+const ImageInput: React.FC<InputProps> = ({ name, disabled, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const { fieldName, registerField, defaultValue, error } = useField(name);
@@ -52,10 +52,18 @@ const ImageInput: React.FC<InputProps> = ({ name, ...rest }) => {
       <div>
         <img src={preview} alt="preview" />
       </div>
-      <input type="file" ref={inputRef} onChange={handlePreview} {...rest} />
-      <button type="button" onClick={() => inputRef.current?.click()}>
-        <BiUpload size="24" />
-      </button>
+      <input
+        type="file"
+        ref={inputRef}
+        onChange={handlePreview}
+        disabled={disabled}
+        {...rest}
+      />
+      {!disabled && (
+        <button type="button" onClick={() => inputRef.current?.click()}>
+          <BiUpload size="24" />
+        </button>
+      )}
     </Container>
   );
 };

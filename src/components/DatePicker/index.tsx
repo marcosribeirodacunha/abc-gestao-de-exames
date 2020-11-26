@@ -27,6 +27,7 @@ const DatePicker: React.FC<Props> = ({
   ...rest
 }) => {
   const datepickerRef = useRef(null);
+
   const { fieldName, registerField, defaultValue, error } = useField(name);
   const [date, setDate] = useState(defaultValue || null);
 
@@ -42,6 +43,9 @@ const DatePicker: React.FC<Props> = ({
       path: 'props.selected',
       clearValue: (ref: any) => {
         ref.clear();
+      },
+      setValue(_: any, value: Date) {
+        setDate(value);
       },
     });
   }, [fieldName, registerField]);
@@ -63,6 +67,7 @@ const DatePicker: React.FC<Props> = ({
           onChange={onChange}
           dateFormat={dateFormat}
           isClearable={isClearable}
+          onChangeRaw={e => e.preventDefault()}
           {...rest}
         />
         {error && (

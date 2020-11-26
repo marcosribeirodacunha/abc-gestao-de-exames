@@ -22,6 +22,10 @@ export const Container = styled.div<{ hasError: boolean }>`
 
     .default > .react-select__control {
       background-color: ${props => props.theme.colors.light};
+
+      &--is-disabled {
+        background-color: ${props => props.theme.colors.light_disabled};
+      }
     }
 
     .white > .react-select__control {
@@ -61,6 +65,10 @@ export const Container = styled.div<{ hasError: boolean }>`
       &--is-selected {
         background: ${props => props.theme.colors.secondary};
       }
+
+      &:active {
+        background: ${props => props.theme.colors.light_disabled};
+      }
     }
 
     &__value-container {
@@ -69,6 +77,12 @@ export const Container = styled.div<{ hasError: boolean }>`
 
     &__placeholder {
       color: ${props => props.theme.colors.dark_disabled};
+    }
+
+    &__single-value {
+      &--is-disabled {
+        color: ${props => props.theme.colors.dark_disabled};
+      }
     }
   }
 `;
