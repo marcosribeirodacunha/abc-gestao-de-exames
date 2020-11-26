@@ -33,7 +33,6 @@ const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => handleOpenDropdown('examsDropdown')}
-              onFocus={() => handleOpenDropdown('examsDropdown')}
             >
               Exames
             </button>
@@ -49,7 +48,6 @@ const Header: React.FC = () => {
             <button
               type="button"
               onClick={() => handleOpenDropdown('employeeDropdown')}
-              onFocus={() => handleOpenDropdown('employeeDropdown')}
             >
               Funcionários
             </button>
