@@ -34,8 +34,8 @@ export const CategoriesTable = styled.section`
   }
 
   main {
-    div {
-      padding: 14px 24px;
+    > div {
+      padding: 13px 24px;
       display: flex;
       justify-content: space-between;
       border: 1px solid transparent;
@@ -50,11 +50,30 @@ export const CategoriesTable = styled.section`
       flex: 1;
       margin-right: 12px;
     }
+  }
 
-    span {
-      display: flex;
-      align-items: center;
+  form {
+    padding: 5px 24px 5px 8px;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid ${props => props.theme.colors.secondary};
+    border-radius: ${props => props.theme.radius};
+
+    > div {
+      margin-top: 0;
+
+      margin-right: 12px;
+      flex-basis: 11rem;
+
+      &:first-child {
+        flex: 1;
+      }
     }
+  }
+
+  span {
+    display: flex;
+    align-items: center;
   }
 `;
 

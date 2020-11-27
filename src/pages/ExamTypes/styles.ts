@@ -21,7 +21,8 @@ export const Content = styled.div`
 
 export const ExamTypesTable = styled.section`
   ${card}
-  min-width: 640px;
+  width: 100%;
+  max-width: 640px;
   margin-right: 2rem;
 
   header {
@@ -47,8 +48,8 @@ export const ExamTypesTable = styled.section`
   }
 
   main {
-    div {
-      padding: 14px 24px;
+    > div {
+      padding: 13px 24px;
       display: flex;
       justify-content: space-between;
       border: 1px solid transparent;
@@ -57,14 +58,33 @@ export const ExamTypesTable = styled.section`
       &.deleting {
         border-color: ${props => props.theme.colors.error};
       }
+
+      p {
+        margin-right: 12px;
+        flex-basis: 10rem;
+
+        &:first-child {
+          flex: 1;
+        }
+      }
     }
 
-    p {
-      margin-right: 12px;
-      flex-basis: 10rem;
+    form {
+      padding: 5px 24px 5px 8px;
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid ${props => props.theme.colors.secondary};
+      border-radius: ${props => props.theme.radius};
 
-      &:first-child {
-        flex: 1;
+      > div {
+        margin-top: 0;
+
+        margin-right: 12px;
+        flex-basis: 11rem;
+
+        &:first-child {
+          flex: 1;
+        }
       }
     }
 
