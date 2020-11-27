@@ -132,59 +132,67 @@ const Jobs: React.FC = () => {
             <strong>Nome</strong>
           </header>
           <main>
-            {jobs.map((job, index) =>
-              jobToUpdate === index ? (
-                <Form
-                  key={job.id}
-                  ref={updateFormRef}
-                  onSubmit={handleUpdate}
-                  initialData={jobs[jobToUpdate]}
-                >
-                  <Input name="name" />
-                  <span>
-                    <FabButton
-                      icon={MdClose}
-                      variant="danger"
-                      onClick={() => setJobToUpdate(-1)}
-                    />
-                    <FabButton type="submit" icon={MdCheck} variant="success" />
-                  </span>
-                </Form>
-              ) : (
-                <div
-                  key={job.id}
-                  className={jobToDelete === index ? 'deleting' : ''}
-                >
-                  <p>{job.name}</p>
-                  <span>
-                    {jobToDelete === index ? (
-                      <>
-                        <FabButton
-                          icon={MdClose}
-                          variant="danger"
-                          onClick={() => setJobToDelete(-1)}
-                        />
-                        <FabButton
-                          icon={MdCheck}
-                          variant="success"
-                          onClick={() => handleDelete(job.id)}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <FabButton
-                          icon={BiPencil}
-                          onClick={() => setJobToUpdate(index)}
-                        />
-                        <FabButton
-                          icon={BiTrash}
-                          variant="danger"
-                          onClick={() => setJobToDelete(index)}
-                        />
-                      </>
-                    )}
-                  </span>
-                </div>
+            {jobs.length === 0 ? (
+              <p>Nenhuma função registrada no momento</p>
+            ) : (
+              jobs.map((job, index) =>
+                jobToUpdate === index ? (
+                  <Form
+                    key={job.id}
+                    ref={updateFormRef}
+                    onSubmit={handleUpdate}
+                    initialData={jobs[jobToUpdate]}
+                  >
+                    <Input name="name" />
+                    <span>
+                      <FabButton
+                        icon={MdClose}
+                        variant="danger"
+                        onClick={() => setJobToUpdate(-1)}
+                      />
+                      <FabButton
+                        type="submit"
+                        icon={MdCheck}
+                        variant="success"
+                      />
+                    </span>
+                  </Form>
+                ) : (
+                  <div
+                    key={job.id}
+                    className={jobToDelete === index ? 'deleting' : ''}
+                  >
+                    <p>{job.name}</p>
+                    <span>
+                      {jobToDelete === index ? (
+                        <>
+                          <FabButton
+                            icon={MdClose}
+                            variant="danger"
+                            onClick={() => setJobToDelete(-1)}
+                          />
+                          <FabButton
+                            icon={MdCheck}
+                            variant="success"
+                            onClick={() => handleDelete(job.id)}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <FabButton
+                            icon={BiPencil}
+                            onClick={() => setJobToUpdate(index)}
+                          />
+                          <FabButton
+                            icon={BiTrash}
+                            variant="danger"
+                            onClick={() => setJobToDelete(index)}
+                          />
+                        </>
+                      )}
+                    </span>
+                  </div>
+                )
               )
             )}
           </main>

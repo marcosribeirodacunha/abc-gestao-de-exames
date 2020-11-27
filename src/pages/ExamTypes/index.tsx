@@ -153,61 +153,69 @@ const ExamTypes: React.FC = () => {
             </strong>
           </header>
           <main>
-            {examTypes.map((examType, index) =>
-              examTypeToUpdate === index ? (
-                <Form
-                  key={examType.id}
-                  ref={updateFormRef}
-                  onSubmit={handleUpdate}
-                  initialData={examTypes[examTypeToUpdate]}
-                >
-                  <Input name="name" />
-                  <Input name="expiration" />
-                  <span>
-                    <FabButton
-                      icon={MdClose}
-                      variant="danger"
-                      onClick={() => setExamTypeToUpdate(-1)}
-                    />
-                    <FabButton type="submit" icon={MdCheck} variant="success" />
-                  </span>
-                </Form>
-              ) : (
-                <div
-                  key={examType.id}
-                  className={examTypeToDelete === index ? 'deleting' : ''}
-                >
-                  <p>{examType.name}</p>
-                  <p>{examType.expiration}</p>
-                  <span>
-                    {examTypeToDelete === index ? (
-                      <>
-                        <FabButton
-                          icon={MdClose}
-                          variant="danger"
-                          onClick={() => setExamTypeToDelete(-1)}
-                        />
-                        <FabButton
-                          icon={MdCheck}
-                          variant="success"
-                          onClick={() => handleDelete(examType.id)}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <FabButton
-                          icon={BiPencil}
-                          onClick={() => setExamTypeToUpdate(index)}
-                        />
-                        <FabButton
-                          icon={BiTrash}
-                          variant="danger"
-                          onClick={() => setExamTypeToDelete(index)}
-                        />
-                      </>
-                    )}
-                  </span>
-                </div>
+            {examTypes.length === 0 ? (
+              <p>Nenhum tipo de exame registrado no momento</p>
+            ) : (
+              examTypes.map((examType, index) =>
+                examTypeToUpdate === index ? (
+                  <Form
+                    key={examType.id}
+                    ref={updateFormRef}
+                    onSubmit={handleUpdate}
+                    initialData={examTypes[examTypeToUpdate]}
+                  >
+                    <Input name="name" />
+                    <Input name="expiration" />
+                    <span>
+                      <FabButton
+                        icon={MdClose}
+                        variant="danger"
+                        onClick={() => setExamTypeToUpdate(-1)}
+                      />
+                      <FabButton
+                        type="submit"
+                        icon={MdCheck}
+                        variant="success"
+                      />
+                    </span>
+                  </Form>
+                ) : (
+                  <div
+                    key={examType.id}
+                    className={examTypeToDelete === index ? 'deleting' : ''}
+                  >
+                    <p>{examType.name}</p>
+                    <p>{examType.expiration}</p>
+                    <span>
+                      {examTypeToDelete === index ? (
+                        <>
+                          <FabButton
+                            icon={MdClose}
+                            variant="danger"
+                            onClick={() => setExamTypeToDelete(-1)}
+                          />
+                          <FabButton
+                            icon={MdCheck}
+                            variant="success"
+                            onClick={() => handleDelete(examType.id)}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <FabButton
+                            icon={BiPencil}
+                            onClick={() => setExamTypeToUpdate(index)}
+                          />
+                          <FabButton
+                            icon={BiTrash}
+                            variant="danger"
+                            onClick={() => setExamTypeToDelete(index)}
+                          />
+                        </>
+                      )}
+                    </span>
+                  </div>
+                )
               )
             )}
           </main>

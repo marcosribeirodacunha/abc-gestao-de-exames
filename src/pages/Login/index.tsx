@@ -59,7 +59,6 @@ const Login: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
-          console.log(error);
         }
       }
     },

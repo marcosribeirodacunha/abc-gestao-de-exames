@@ -48,6 +48,11 @@ export const ExamTypesTable = styled.section`
   }
 
   main {
+    > p {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
     > div {
       padding: 13px 24px;
       display: flex;

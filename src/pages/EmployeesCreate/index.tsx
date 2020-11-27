@@ -97,7 +97,6 @@ const EmployeesCreate: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
-          console.log(error);
         }
       }
     },

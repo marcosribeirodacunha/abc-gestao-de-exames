@@ -77,8 +77,6 @@ const ExamsDetails: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
-
-        console.log(error);
       }
     }
 
@@ -147,7 +145,6 @@ const ExamsDetails: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
-          console.log(error);
         }
       }
     },
@@ -215,7 +212,7 @@ const ExamsDetails: React.FC = () => {
     <Container>
       <EmployeeDataForm
         ref={employeeFormRef}
-        onSubmit={data => console.log(data)}
+        onSubmit={() => employeeFormRef.current?.getData()}
       >
         <ImageInput name="photo" disabled />
         <Input label="Nome" name="name" disabled />
@@ -224,10 +221,6 @@ const ExamsDetails: React.FC = () => {
         <Input label="Telefone" name="phone" disabled />
         <Input label="Função" name="jobId" disabled />
         <Input label="Matrícula" name="registrationNumber" disabled />
-
-        {/* <Button type="submit" variant="primary" block>
-            Registrar
-          </Button> */}
       </EmployeeDataForm>
 
       <div>

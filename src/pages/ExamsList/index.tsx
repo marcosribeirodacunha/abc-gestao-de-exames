@@ -164,21 +164,28 @@ const ExamsList: React.FC = () => {
           <strong>Vencimento</strong>
         </header>
         <main>
-          {exams.map(exam => (
-            <div key={exam.id} onClick={() => handleNavigateToDetails(exam.id)}>
-              <p>{exam.employee.name}</p>
-              <p>{exam.employee.job.name}</p>
-              <p>{exam.type.name}</p>
-              <p>{exam.category.name}</p>
-              <p>
-                <Badge className={exam.expired ? 'red' : 'green'}>
-                  {exam.expired ? 'Vencido' : 'Válido'}
-                </Badge>
-              </p>
-              <p>{format(new Date(exam.dueDate), 'dd/MM/yyyy')}</p>
-              <MdChevronRight size="24" />
-            </div>
-          ))}
+          {exams.length === 0 ? (
+            <p>Nenhum exame registrado no momento</p>
+          ) : (
+            exams.map(exam => (
+              <div
+                key={exam.id}
+                onClick={() => handleNavigateToDetails(exam.id)}
+              >
+                <p>{exam.employee.name}</p>
+                <p>{exam.employee.job.name}</p>
+                <p>{exam.type.name}</p>
+                <p>{exam.category.name}</p>
+                <p>
+                  <Badge className={exam.expired ? 'red' : 'green'}>
+                    {exam.expired ? 'Vencido' : 'Válido'}
+                  </Badge>
+                </p>
+                <p>{format(new Date(exam.dueDate), 'dd/MM/yyyy')}</p>
+                <MdChevronRight size="24" />
+              </div>
+            ))
+          )}
         </main>
       </ExamsTable>
     </Container>

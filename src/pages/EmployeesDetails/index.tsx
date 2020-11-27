@@ -64,8 +64,6 @@ const EmployeesDetails: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
-
-        console.log(error);
       }
     }
 
@@ -139,7 +137,6 @@ const EmployeesDetails: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
-          console.log(error);
         }
       }
     },

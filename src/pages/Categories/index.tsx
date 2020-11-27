@@ -135,58 +135,66 @@ const Categories: React.FC = () => {
             <strong>Nome</strong>
           </header>
           <main>
-            {categories.map((category, index) =>
-              categoryToUpdate === index ? (
-                <Form
-                  ref={updateFormRef}
-                  onSubmit={handleUpdate}
-                  initialData={categories[categoryToUpdate]}
-                >
-                  <Input name="name" />
-                  <span>
-                    <FabButton
-                      icon={MdClose}
-                      variant="danger"
-                      onClick={() => setCategoryToUpdate(-1)}
-                    />
-                    <FabButton type="submit" icon={MdCheck} variant="success" />
-                  </span>
-                </Form>
-              ) : (
-                <div
-                  key={category.id}
-                  className={categoryToDelete === index ? 'deleting' : ''}
-                >
-                  <p>{category.name}</p>
-                  <span>
-                    {categoryToDelete === index ? (
-                      <>
-                        <FabButton
-                          icon={MdClose}
-                          variant="danger"
-                          onClick={() => setCategoryToDelete(-1)}
-                        />
-                        <FabButton
-                          icon={MdCheck}
-                          variant="success"
-                          onClick={() => handleDelete(category.id)}
-                        />
-                      </>
-                    ) : (
-                      <>
-                        <FabButton
-                          icon={BiPencil}
-                          onClick={() => setCategoryToUpdate(index)}
-                        />
-                        <FabButton
-                          icon={BiTrash}
-                          variant="danger"
-                          onClick={() => setCategoryToDelete(index)}
-                        />
-                      </>
-                    )}
-                  </span>
-                </div>
+            {categories.length === 0 ? (
+              <p>Nenhuma categoria registrada no momento</p>
+            ) : (
+              categories.map((category, index) =>
+                categoryToUpdate === index ? (
+                  <Form
+                    ref={updateFormRef}
+                    onSubmit={handleUpdate}
+                    initialData={categories[categoryToUpdate]}
+                  >
+                    <Input name="name" />
+                    <span>
+                      <FabButton
+                        icon={MdClose}
+                        variant="danger"
+                        onClick={() => setCategoryToUpdate(-1)}
+                      />
+                      <FabButton
+                        type="submit"
+                        icon={MdCheck}
+                        variant="success"
+                      />
+                    </span>
+                  </Form>
+                ) : (
+                  <div
+                    key={category.id}
+                    className={categoryToDelete === index ? 'deleting' : ''}
+                  >
+                    <p>{category.name}</p>
+                    <span>
+                      {categoryToDelete === index ? (
+                        <>
+                          <FabButton
+                            icon={MdClose}
+                            variant="danger"
+                            onClick={() => setCategoryToDelete(-1)}
+                          />
+                          <FabButton
+                            icon={MdCheck}
+                            variant="success"
+                            onClick={() => handleDelete(category.id)}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <FabButton
+                            icon={BiPencil}
+                            onClick={() => setCategoryToUpdate(index)}
+                          />
+                          <FabButton
+                            icon={BiTrash}
+                            variant="danger"
+                            onClick={() => setCategoryToDelete(index)}
+                          />
+                        </>
+                      )}
+                    </span>
+                  </div>
+                )
               )
             )}
           </main>

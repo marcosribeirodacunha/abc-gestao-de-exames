@@ -109,19 +109,23 @@ const EmployeesList: React.FC = () => {
           <strong>E-mail</strong>
         </header>
         <main>
-          {employees.map(employee => (
-            <div
-              key={employee.id}
-              onClick={() => handleNavigateToDetails(employee.id)}
-            >
-              <p>{employee.name}</p>
-              <p>{employee.cpf}</p>
-              <p>{employee.registrationNumber}</p>
-              <p>{employee.job.name}</p>
-              <p>{employee.email}</p>
-              <MdChevronRight size="24" />
-            </div>
-          ))}
+          {employees.length === 0 ? (
+            <p>Nenhum empregado registrado no nomento</p>
+          ) : (
+            employees.map(employee => (
+              <div
+                key={employee.id}
+                onClick={() => handleNavigateToDetails(employee.id)}
+              >
+                <p>{employee.name}</p>
+                <p>{employee.cpf}</p>
+                <p>{employee.registrationNumber}</p>
+                <p>{employee.job.name}</p>
+                <p>{employee.email}</p>
+                <MdChevronRight size="24" />
+              </div>
+            ))
+          )}
         </main>
       </EmployeesTable>
     </Container>
