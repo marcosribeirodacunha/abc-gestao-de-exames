@@ -41,6 +41,7 @@ const ExamsDetails: React.FC = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isFetchingUpdate, setFetchingUpdate] = useState(false);
 
   useEffect(() => {
     async function loadData() {
@@ -86,6 +87,7 @@ const ExamsDetails: React.FC = () => {
   const handleUpdateExamData: SubmitHandler<ExamFormData> = useCallback(
     async data => {
       try {
+        setFetchingUpdate(true);
         examFormRef.current?.setErrors({});
 
         Yup.setLocale({
@@ -133,6 +135,7 @@ const ExamsDetails: React.FC = () => {
           date: exam.date,
         });
         setIsUpdating(false);
+        setFetchingUpdate(false);
 
         toast('Exame atualizado com sucesso');
       } catch (error) {
@@ -146,6 +149,7 @@ const ExamsDetails: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
         }
+        setFetchingUpdate(false);
       }
     },
     [categories, exam, examTypes]
@@ -235,7 +239,7 @@ const ExamsDetails: React.FC = () => {
                 label: examType.name,
               }))}
               onChange={debounce(handleSelectUpdateDependents, 1)}
-              isDisabled={!isUpdating}
+              isDisabled={!isUpdating || isFetchingUpdate}
               isClearable={false}
             />
 
@@ -248,14 +252,14 @@ const ExamsDetails: React.FC = () => {
                 value: category.id,
                 label: category.name,
               }))}
-              isDisabled={!isUpdating}
+              isDisabled={!isUpdating || isFetchingUpdate}
               isClearable={false}
             />
 
             <DatePicker
               label="Data de realização"
               name="date"
-              disabled={!isUpdating}
+              disabled={!isUpdating || isFetchingUpdate}
               maxDate={new Date()}
               isClearable={false}
               handleChange={debounce(handleDateUpdateDependents, 1)}
@@ -271,10 +275,18 @@ const ExamsDetails: React.FC = () => {
             {!isDeleted &&
               (isUpdating ? (
                 <div className="button-row">
-                  <Button variant="light" onClick={handleCancelUpdate}>
+                  <Button
+                    variant="light"
+                    onClick={handleCancelUpdate}
+                    isLoading={isFetchingUpdate}
+                  >
                     Cancelar
                   </Button>
-                  <Button type="submit" variant="primary">
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    isLoading={isFetchingUpdate}
+                  >
                     Salvar
                   </Button>
                 </div>

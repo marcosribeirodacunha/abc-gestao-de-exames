@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 
 export const Container = styled.button<{ block: boolean }>`
   font-weight: 500;
@@ -66,6 +66,57 @@ export const Container = styled.button<{ block: boolean }>`
     &:hover:not(:disabled),
     &:focus {
       background-color: ${props => props.theme.colors.error_dark};
+    }
+  }
+`;
+
+const loadEffect = keyframes`
+  0, 100% {
+    opacity: 0
+  }
+
+  50% {
+    opacity: .6
+  }
+`;
+
+export const Loader = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.5rem;
+
+  &.dark > span,
+  &.primary > span {
+    background: ${props => props.theme.colors.white};
+  }
+
+  &.secondary > span {
+    background: ${props => props.theme.colors.primary};
+  }
+
+  &.light > span {
+    background: ${props => props.theme.colors.dark};
+  }
+
+  span {
+    display: inline-block;
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    animation: ${loadEffect} 1.5s linear infinite;
+
+    &.second {
+      animation-delay: 0.5s;
+    }
+
+    &.third {
+      animation-delay: 1s;
+    }
+
+    & + span {
+      margin-left: 0.3rem;
     }
   }
 `;

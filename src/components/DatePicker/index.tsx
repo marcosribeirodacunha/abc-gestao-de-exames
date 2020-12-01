@@ -68,6 +68,7 @@ const DatePicker: React.FC<Props> = ({
           dateFormat={dateFormat}
           isClearable={isClearable}
           onChangeRaw={e => e.preventDefault()}
+          autoComplete="off"
           {...rest}
         />
         {error && (

@@ -30,6 +30,7 @@ const EmployeesCreate: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
   const [jobs, setJobs] = useState<Job[]>([]);
 
   useEffect(() => {
@@ -55,6 +56,7 @@ const EmployeesCreate: React.FC = () => {
   const handleSubmit: SubmitHandler<FormData> = useCallback(
     async (data, { reset }) => {
       try {
+        setIsCreating(true);
         formRef.current?.setErrors({});
 
         Yup.setLocale({
@@ -101,6 +103,7 @@ const EmployeesCreate: React.FC = () => {
         toast('Funcionário registrado com successo');
 
         reset();
+        setIsCreating(false);
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const errors = getValidationErrors(error);
@@ -112,6 +115,7 @@ const EmployeesCreate: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
         }
+        setIsCreating(false);
       }
     },
     []
@@ -124,11 +128,11 @@ const EmployeesCreate: React.FC = () => {
       <h1>Registrar funcionário</h1>
 
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <ImageInput name="photo" />
-        <Input label="Nome" name="name" />
-        <Input label="CPF" name="cpf" />
-        <Input label="E-mail" name="email" />
-        <Input label="Telefone" name="phone" />
+        <ImageInput name="photo" disabled={isCreating} />
+        <Input label="Nome" name="name" disabled={isCreating} />
+        <Input label="CPF" name="cpf" disabled={isCreating} />
+        <Input label="E-mail" name="email" disabled={isCreating} />
+        <Input label="Telefone" name="phone" disabled={isCreating} />
         <Select
           label="Função"
           name="jobId"
@@ -136,10 +140,15 @@ const EmployeesCreate: React.FC = () => {
             value: job.id,
             label: job.name,
           }))}
+          isDisabled={isCreating}
         />
-        <Input label="Matrícula" name="registrationNumber" />
+        <Input
+          label="Matrícula"
+          name="registrationNumber"
+          disabled={isCreating}
+        />
 
-        <Button type="submit" variant="primary" block>
+        <Button type="submit" variant="primary" block isLoading={isCreating}>
           Registrar
         </Button>
       </Form>

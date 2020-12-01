@@ -2,12 +2,17 @@ import React from 'react';
 
 import { Container } from './styles';
 
-const Loader: React.FC = () => {
+interface Props {
+  size?: number;
+  message?: boolean | string;
+}
+
+const Loader: React.FC<Props> = ({ size = 3, message = 'Carregando' }) => {
   return (
-    <Container>
+    <Container size={size}>
       <div className="back-circle" />
       <div className="main-circle" />
-      <h1>Carregando</h1>
+      {message && <h1>{message}</h1>}
     </Container>
   );
 };

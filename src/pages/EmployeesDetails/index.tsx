@@ -40,6 +40,7 @@ const EmployeesDetails: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [employee, setEmployee] = useState<Employee>({} as Employee);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isFetchingUpdate, setIsFetchingUpdate] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
 
@@ -77,6 +78,7 @@ const EmployeesDetails: React.FC = () => {
   const handleSubmit: SubmitHandler<FormData> = useCallback(
     async data => {
       try {
+        setIsFetchingUpdate(true);
         formRef.current?.setErrors({});
 
         Yup.setLocale({
@@ -129,6 +131,7 @@ const EmployeesDetails: React.FC = () => {
         const jobIndex = jobs.findIndex(item => item.id === data.jobId);
         setEmployee({ ...employee, job: jobs[jobIndex] });
         setIsUpdating(false);
+        setIsFetchingUpdate(false);
 
         toast('Dados atualizados com successo');
       } catch (error) {
@@ -142,6 +145,7 @@ const EmployeesDetails: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
         }
+        setIsFetchingUpdate(false);
       }
     },
     [employee, jobs]
@@ -179,11 +183,27 @@ const EmployeesDetails: React.FC = () => {
   return (
     <Container>
       <Form ref={formRef} onSubmit={handleSubmit}>
-        <ImageInput name="photo" disabled={!isUpdating} />
-        <Input label="Nome" name="name" disabled={!isUpdating} />
-        <Input label="CPF" name="cpf" disabled={!isUpdating} />
-        <Input label="E-mail" name="email" disabled={!isUpdating} />
-        <Input label="Telefone" name="phone" disabled={!isUpdating} />
+        <ImageInput name="photo" disabled={!isUpdating || isFetchingUpdate} />
+        <Input
+          label="Nome"
+          name="name"
+          disabled={!isUpdating || isFetchingUpdate}
+        />
+        <Input
+          label="CPF"
+          name="cpf"
+          disabled={!isUpdating || isFetchingUpdate}
+        />
+        <Input
+          label="E-mail"
+          name="email"
+          disabled={!isUpdating || isFetchingUpdate}
+        />
+        <Input
+          label="Telefone"
+          name="phone"
+          disabled={!isUpdating || isFetchingUpdate}
+        />
         <Select
           label="Função"
           name="jobId"
@@ -191,21 +211,29 @@ const EmployeesDetails: React.FC = () => {
             value: job.id,
             label: job.name,
           }))}
-          isDisabled={!isUpdating}
+          isDisabled={!isUpdating || isFetchingUpdate}
         />
         <Input
           label="Matrícula"
           name="registrationNumber"
-          disabled={!isUpdating}
+          disabled={!isUpdating || isFetchingUpdate}
         />
 
         {!isDeleted &&
           (isUpdating ? (
             <div className="button-row">
-              <Button variant="light" onClick={handleCancelUpdate}>
+              <Button
+                variant="light"
+                onClick={handleCancelUpdate}
+                isLoading={isFetchingUpdate}
+              >
                 Cancelar
               </Button>
-              <Button type="submit" variant="primary">
+              <Button
+                type="submit"
+                variant="primary"
+                isLoading={isFetchingUpdate}
+              >
                 Salvar
               </Button>
             </div>

@@ -25,6 +25,7 @@ const schema = Yup.object().shape({
 
 const Categories: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryToDelete, setCategoryToDelete] = useState(-1);
   const [categoryToUpdate, setCategoryToUpdate] = useState(-1);
@@ -53,6 +54,7 @@ const Categories: React.FC = () => {
   const handleCreate: SubmitHandler<{ name: string }> = useCallback(
     async (data, { reset }) => {
       try {
+        setIsCreating(true);
         createFormRef.current?.setErrors({});
 
         await schema.validate(data, { abortEarly: false });
@@ -62,6 +64,7 @@ const Categories: React.FC = () => {
         reset();
 
         toast('Categoria criada com successo');
+        setIsCreating(false);
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const err = getValidationErrors(error);
@@ -72,6 +75,7 @@ const Categories: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
+        setIsCreating(false);
       }
     },
     [categories]
@@ -206,8 +210,8 @@ const Categories: React.FC = () => {
         <CreateForm ref={createFormRef} onSubmit={handleCreate}>
           <p>Cadastre uma nova categoria</p>
 
-          <Input label="Nome" name="name" />
-          <Button type="submit" variant="primary" block>
+          <Input label="Nome" name="name" disabled={isCreating} />
+          <Button type="submit" variant="primary" block isLoading={isCreating}>
             Cadastrar
           </Button>
         </CreateForm>

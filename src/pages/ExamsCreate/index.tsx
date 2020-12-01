@@ -28,6 +28,7 @@ const ExamsCreate: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [examTypes, setExamTypes] = useState<ExamType[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -59,6 +60,7 @@ const ExamsCreate: React.FC = () => {
   const handleSubmit: SubmitHandler<FormData> = useCallback(
     async (data, { reset }) => {
       try {
+        setIsCreating(true);
         formRef.current?.setErrors({});
 
         Yup.setLocale({
@@ -91,6 +93,7 @@ const ExamsCreate: React.FC = () => {
         await api.post('exams', data);
         toast('Exame registrado com sucesso');
 
+        setIsCreating(false);
         reset();
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
@@ -102,6 +105,7 @@ const ExamsCreate: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
+          setIsCreating(false);
         }
       }
     },
@@ -122,6 +126,7 @@ const ExamsCreate: React.FC = () => {
             value: employee.id,
             label: employee.name,
           }))}
+          isDisabled={isCreating}
         />
         <Select
           label="Tipo de exame"
@@ -130,6 +135,7 @@ const ExamsCreate: React.FC = () => {
             value: examType.id,
             label: examType.name,
           }))}
+          isDisabled={isCreating}
         />
         <Select
           label="Categoria"
@@ -138,18 +144,20 @@ const ExamsCreate: React.FC = () => {
             value: category.id,
             label: category.name,
           }))}
+          isDisabled={isCreating}
         />
         <DatePicker
           label="Data de realização"
           name="date"
           maxDate={new Date()}
+          disabled={isCreating}
         />
         <p>
           Obs.: Se a data não for informada, será registrado o nomento do
           cadastro
         </p>
 
-        <Button type="submit" variant="primary" block>
+        <Button type="submit" variant="primary" block isLoading={isCreating}>
           Registrar
         </Button>
       </Form>

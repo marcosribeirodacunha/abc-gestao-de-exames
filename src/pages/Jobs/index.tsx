@@ -28,6 +28,7 @@ const Jobs: React.FC = () => {
   const [jobs, setJobs] = useState<Job[]>([]);
   const [jobToDelete, setJobToDelete] = useState(-1);
   const [jobToUpdate, setJobToUpdate] = useState(-1);
+  const [isCreating, setIsCreating] = useState(false);
 
   const createFormRef = useRef<FormHandles>(null);
   const updateFormRef = useRef<FormHandles>(null);
@@ -53,12 +54,14 @@ const Jobs: React.FC = () => {
   const handleCreate: SubmitHandler<{ name: string }> = useCallback(
     async (data, { reset }) => {
       try {
+        setIsCreating(true);
         createFormRef.current?.setErrors({});
 
         await schema.validate(data, { abortEarly: false });
 
         const { data: newJob } = await api.post('jobs', data);
         setJobs([newJob, ...jobs]);
+        setIsCreating(false);
         reset();
 
         toast('Função criada com successo');
@@ -72,6 +75,7 @@ const Jobs: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
+        setIsCreating(false);
       }
     },
     [jobs]
@@ -204,8 +208,8 @@ const Jobs: React.FC = () => {
         <CreateForm ref={createFormRef} onSubmit={handleCreate}>
           <p>Cadastre uma nova função</p>
 
-          <Input label="Nome" name="name" />
-          <Button type="submit" variant="primary" block>
+          <Input label="Nome" name="name" disabled={isCreating} />
+          <Button type="submit" variant="primary" block isLoading={isCreating}>
             Cadastrar
           </Button>
         </CreateForm>

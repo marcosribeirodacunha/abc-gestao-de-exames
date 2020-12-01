@@ -31,10 +31,10 @@ const scaling = keyframes`
   }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ size: number }>`
+  background: rgba(0, 0, 0, 0.15);
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.15);
   position: absolute;
   top: 0;
   left: 0;
@@ -47,17 +47,17 @@ export const Container = styled.div`
     left: 50%;
     transform: translateX(-50%) scale(0);
     background: ${props => props.theme.colors.secondary};
-    width: 3rem;
-    height: 3rem;
+    width: ${props => `${props.size}rem`};
+    height: ${props => `${props.size}rem`};
     border-radius: 50%;
     transition: 0.5s;
 
     &.back-circle {
-      animation: ${growAndFade} 2s ease-in-out 1s infinite;
+      animation: ${growAndFade} 1.5s ease-in-out 0.75s infinite;
     }
 
     &.main-circle {
-      animation: ${scaling} 2s ease-in-out infinite;
+      animation: ${scaling} 1.5s ease-in-out infinite;
     }
   }
 

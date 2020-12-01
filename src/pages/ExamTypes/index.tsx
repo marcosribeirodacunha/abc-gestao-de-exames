@@ -35,6 +35,7 @@ type FormData = {
 
 const ExamTypes: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
   const [examTypes, setExamTypes] = useState<ExamType[]>([]);
   const [examTypeToDelete, setExamTypeToDelete] = useState(-1);
   const [examTypeToUpdate, setExamTypeToUpdate] = useState(-1);
@@ -63,6 +64,7 @@ const ExamTypes: React.FC = () => {
   const handleCreate: SubmitHandler<FormData> = useCallback(
     async (data, { reset }) => {
       try {
+        setIsCreating(true);
         createFormRef.current?.setErrors({});
 
         await schema.validate(data, { abortEarly: false });
@@ -72,9 +74,9 @@ const ExamTypes: React.FC = () => {
           expiration: Number(data.expiration),
         });
         setExamTypes([newExamType, ...examTypes]);
-        reset();
-
+        setIsCreating(false);
         toast('Tipo de exame criada com successo');
+        reset();
       } catch (error) {
         if (error instanceof Yup.ValidationError) {
           const err = getValidationErrors(error);
@@ -85,6 +87,7 @@ const ExamTypes: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
+        setIsCreating(false);
       }
     },
     [examTypes]
@@ -227,15 +230,16 @@ const ExamTypes: React.FC = () => {
         <CreateForm ref={createFormRef} onSubmit={handleCreate}>
           <p>Cadastre um novo tipo de exame</p>
 
-          <Input label="Nome" name="name" />
+          <Input label="Nome" name="name" disabled={isCreating} />
           <Input
             label="Validade"
             tip="em dias"
             name="expiration"
             type="number"
             min="1"
+            disabled={isCreating}
           />
-          <Button type="submit" variant="primary" block>
+          <Button type="submit" variant="primary" block isLoading={isCreating}>
             Cadastrar
           </Button>
         </CreateForm>
