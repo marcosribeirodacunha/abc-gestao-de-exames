@@ -1,4 +1,7 @@
 import React, { createContext, useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
+
+import { differenceInHours } from 'date-fns';
 
 import api from '../services/api';
 
@@ -32,8 +35,20 @@ const AuthProvider: React.FC = ({ children }) => {
     const storageUser = localStorage.getItem('@abc:user');
     const storageToken = localStorage.getItem('@abc:token');
 
+    // 1606583523808
     if (storageUser && storageToken) {
-      api.defaults.headers.authorization = `Bearer ${storageToken}`;
+      const parsedToken = JSON.parse(storageToken);
+      const tokenExp = new Date(parsedToken.exp);
+
+      if (differenceInHours(new Date(), tokenExp) >= 24) {
+        toast.error('Sessão expirada. Faça login novamente.');
+        localStorage.removeItem('@abc:user');
+        localStorage.removeItem('@abc:token');
+        setLoading(false);
+        return null;
+      }
+
+      api.defaults.headers.authorization = `Bearer ${parsedToken.token}`;
       setLoading(false);
       return JSON.parse(storageUser);
     }
@@ -47,9 +62,13 @@ const AuthProvider: React.FC = ({ children }) => {
       const { data } = await api.post<Response>('/sessions', credentials);
 
       const storageUser = { name: data.user.name };
+      const storageToken = {
+        token: data.token,
+        exp: Date.now(),
+      };
 
       localStorage.setItem('@abc:user', JSON.stringify(storageUser));
-      localStorage.setItem('@abc:token', data.token);
+      localStorage.setItem('@abc:token', JSON.stringify(storageToken));
       api.defaults.headers.authorization = `Bearer ${data.token}`;
 
       setUser(storageUser);

@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import ImageInput from '../../components/ImageInput';
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import Select from '../../components/Select';
 import Job from '../../interfaces/job';
 import api from '../../services/api';
@@ -27,12 +28,25 @@ interface FormData {
 
 const EmployeesCreate: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<Job[]>([]);
 
   useEffect(() => {
     async function loadJobs() {
-      const { data } = await api.get('jobs');
-      setJobs(data);
+      try {
+        const { data } = await api.get('jobs');
+        setJobs(data);
+      } catch (error) {
+        if (error.response) {
+          toast.error(error.response.data.message);
+        } else
+          toast.error(
+            'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
+          );
+      }
+
+      setIsLoading(false);
     }
 
     loadJobs();
@@ -102,6 +116,8 @@ const EmployeesCreate: React.FC = () => {
     },
     []
   );
+
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

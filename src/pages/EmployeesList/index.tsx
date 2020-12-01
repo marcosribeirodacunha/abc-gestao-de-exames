@@ -10,6 +10,7 @@ import { Form } from '@unform/web';
 import { debounce } from 'lodash';
 
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import Select from '../../components/Select';
 import Employee from '../../interfaces/employee';
 import Job from '../../interfaces/job';
@@ -26,22 +27,30 @@ const EmployeesList: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
 
   useEffect(() => {
-    async function loadJobs() {
-      const { data } = await api.get('jobs');
-      setJobs(data);
+    async function loadData() {
+      try {
+        const { data: jobsData } = await api.get('jobs');
+        const { data: usersData } = await api.get('users');
+
+        setJobs(jobsData);
+        setEmployees(usersData);
+      } catch (error) {
+        if (error.response) {
+          toast.error(error.response.data.message);
+        } else
+          toast.error(
+            'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
+          );
+      }
+      setIsLoading(false);
     }
 
-    async function loadEmployees() {
-      const { data } = await api.get('users');
-      setEmployees(data);
-    }
-
-    loadJobs();
-    loadEmployees();
+    loadData();
   }, []);
 
   const handleSubmit: SubmitHandler<FilterData> = useCallback(async data => {
@@ -63,7 +72,7 @@ const EmployeesList: React.FC = () => {
     history.push(`funcionarios/${id}`);
   }
 
-  if (!jobs || !employees) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

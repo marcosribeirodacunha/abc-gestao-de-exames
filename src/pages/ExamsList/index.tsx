@@ -12,6 +12,7 @@ import { debounce } from 'lodash';
 
 import DatePicker from '../../components/DatePicker';
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import Select from '../../components/Select';
 import Category from '../../interfaces/category';
 import Exam from '../../interfaces/exam';
@@ -30,6 +31,7 @@ const ExamsList: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const history = useHistory();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [examTypes, setExamTypes] = useState<ExamType[]>([]);
@@ -55,6 +57,7 @@ const ExamsList: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
       }
+      setIsLoading(false);
     }
 
     loadData();
@@ -79,7 +82,7 @@ const ExamsList: React.FC = () => {
     history.push(`exames/${id}`);
   }
 
-  if (!jobs || !categories || !examTypes || !exams) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

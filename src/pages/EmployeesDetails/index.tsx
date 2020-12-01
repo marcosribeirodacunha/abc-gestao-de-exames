@@ -10,6 +10,7 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import ImageInput from '../../components/ImageInput';
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import Select from '../../components/Select';
 import Employee from '../../interfaces/employee';
 import Job from '../../interfaces/job';
@@ -35,6 +36,7 @@ const EmployeesDetails: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
   const params = useParams() as Params;
 
+  const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [employee, setEmployee] = useState<Employee>({} as Employee);
   const [isUpdating, setIsUpdating] = useState(false);
@@ -49,6 +51,7 @@ const EmployeesDetails: React.FC = () => {
 
         setJobs(jobsData);
         setEmployee(employeeData);
+        setIsLoading(false);
 
         formRef.current?.setData({
           ...employeeData,
@@ -64,6 +67,7 @@ const EmployeesDetails: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
+        setIsLoading(false);
       }
     }
 
@@ -170,7 +174,7 @@ const EmployeesDetails: React.FC = () => {
     }
   }, [employee]);
 
-  if (!jobs || Object.keys(employee).length === 0) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

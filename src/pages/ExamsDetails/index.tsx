@@ -12,9 +12,9 @@ import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
 import ImageInput from '../../components/ImageInput';
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import Select from '../../components/Select';
 import Category from '../../interfaces/category';
-import Employee from '../../interfaces/employee';
 import Exam from '../../interfaces/exam';
 import ExamType from '../../interfaces/examType';
 import api from '../../services/api';
@@ -34,7 +34,7 @@ const ExamsDetails: React.FC = () => {
   const examFormRef = useRef<FormHandles>(null);
   const params = useParams() as Params;
 
-  const [employees, setEmployees] = useState<Employee[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [examTypes, setExamTypes] = useState<ExamType[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [exam, setExam] = useState<Exam>({} as Exam);
@@ -45,15 +45,14 @@ const ExamsDetails: React.FC = () => {
   useEffect(() => {
     async function loadData() {
       try {
-        const { data: employeesData } = await api.get('users');
         const { data: categoriesData } = await api.get('categories');
         const { data: examTypesData } = await api.get('exam-types');
         const { data: examData } = await api.get(`exams/${params.id}`);
 
-        setEmployees(employeesData);
         setCategories(categoriesData);
         setExamTypes(examTypesData);
         setExam(examData);
+        setIsLoading(false);
 
         employeeFormRef.current?.setData({
           ...examData.employee,
@@ -77,6 +76,7 @@ const ExamsDetails: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
+        setIsLoading(false);
       }
     }
 
@@ -205,8 +205,7 @@ const ExamsDetails: React.FC = () => {
     }
   }, [exam]);
 
-  if (!employees || !categories || !examTypes || Object.keys(exam).length === 0)
-    return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

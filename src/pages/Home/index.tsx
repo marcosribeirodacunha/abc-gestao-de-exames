@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import { subMonths } from 'date-fns';
 
+import Loader from '../../components/Loader';
 import Exam from '../../interfaces/exam';
 import api from '../../services/api';
 import { Container, Table } from './styles';
@@ -14,6 +15,7 @@ import { Container, Table } from './styles';
 const EmployeesList: React.FC = () => {
   const history = useHistory();
 
+  const [isLoading, setIsLoading] = useState(true);
   const [exams, setExams] = useState<Exam[]>([]);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const EmployeesList: React.FC = () => {
           );
         }
       }
+      setIsLoading(false);
     }
 
     loadData();
@@ -43,7 +46,7 @@ const EmployeesList: React.FC = () => {
     history.push(`exames/${id}`);
   }
 
-  if (!exams) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

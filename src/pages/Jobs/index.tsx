@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import FabButton from '../../components/FabButton';
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import Job from '../../interfaces/job';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -23,6 +24,7 @@ const schema = Yup.object().shape({
 });
 
 const Jobs: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState<Job[]>([]);
   const [jobToDelete, setJobToDelete] = useState(-1);
   const [jobToUpdate, setJobToUpdate] = useState(-1);
@@ -42,6 +44,7 @@ const Jobs: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
       }
+      setIsLoading(false);
     }
 
     loadData();
@@ -120,7 +123,7 @@ const Jobs: React.FC = () => {
     }
   };
 
-  if (!jobs) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

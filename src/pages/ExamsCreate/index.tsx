@@ -8,6 +8,7 @@ import * as Yup from 'yup';
 
 import Button from '../../components/Button';
 import DatePicker from '../../components/DatePicker';
+import Loader from '../../components/Loader';
 import Select from '../../components/Select';
 import Category from '../../interfaces/category';
 import Employee from '../../interfaces/employee';
@@ -25,6 +26,8 @@ interface FormData {
 
 const ExamsCreate: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+
+  const [isLoading, setIsLoading] = useState(true);
   const [employees, setEmployees] = useState<Employee[]>([]);
   const [examTypes, setExamTypes] = useState<ExamType[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -47,6 +50,7 @@ const ExamsCreate: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
       }
+      setIsLoading(false);
     }
 
     loadData();
@@ -104,7 +108,7 @@ const ExamsCreate: React.FC = () => {
     []
   );
 
-  if (!employees || !categories || !examTypes) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

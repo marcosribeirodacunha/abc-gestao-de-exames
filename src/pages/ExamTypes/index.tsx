@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import FabButton from '../../components/FabButton';
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import ExamType from '../../interfaces/examType';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -33,6 +34,7 @@ type FormData = {
 };
 
 const ExamTypes: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [examTypes, setExamTypes] = useState<ExamType[]>([]);
   const [examTypeToDelete, setExamTypeToDelete] = useState(-1);
   const [examTypeToUpdate, setExamTypeToUpdate] = useState(-1);
@@ -52,6 +54,7 @@ const ExamTypes: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
       }
+      setIsLoading(false);
     }
 
     loadData();
@@ -138,7 +141,7 @@ const ExamTypes: React.FC = () => {
     }
   };
 
-  if (!examTypes) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>

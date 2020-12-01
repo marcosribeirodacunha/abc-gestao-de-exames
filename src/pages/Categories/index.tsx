@@ -11,6 +11,7 @@ import * as Yup from 'yup';
 import Button from '../../components/Button';
 import FabButton from '../../components/FabButton';
 import Input from '../../components/Input';
+import Loader from '../../components/Loader';
 import Category from '../../interfaces/category';
 import api from '../../services/api';
 import getValidationErrors from '../../utils/getValidationErrors';
@@ -23,6 +24,7 @@ const schema = Yup.object().shape({
 });
 
 const Categories: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryToDelete, setCategoryToDelete] = useState(-1);
   const [categoryToUpdate, setCategoryToUpdate] = useState(-1);
@@ -42,6 +44,7 @@ const Categories: React.FC = () => {
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
       }
+      setIsLoading(false);
     }
 
     loadData();
@@ -123,7 +126,7 @@ const Categories: React.FC = () => {
     }
   };
 
-  if (!categories) return <h1>Loading...</h1>;
+  if (isLoading) return <Loader />;
 
   return (
     <Container>
