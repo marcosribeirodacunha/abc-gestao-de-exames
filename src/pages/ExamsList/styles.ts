@@ -111,11 +111,6 @@ export const ExamsTable = styled.section`
   }
 
   main {
-    > p {
-      margin-top: 2rem;
-      text-align: center;
-    }
-
     > div {
       border-radius: ${props => props.theme.radius};
       cursor: pointer;

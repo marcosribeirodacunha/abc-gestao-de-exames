@@ -5,7 +5,7 @@ import { MdChevronRight } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { subMonths } from 'date-fns';
+import { addMonths, format } from 'date-fns';
 
 import Loader from '../../components/Loader';
 import Exam from '../../interfaces/exam';
@@ -23,8 +23,8 @@ const EmployeesList: React.FC = () => {
       try {
         const { data } = await api.get('exams', {
           params: {
-            due_start: subMonths(new Date(), 1),
-            due_end: new Date(),
+            due_start: new Date(),
+            due_end: addMonths(new Date(), 1),
           },
         });
         setExams(data);
@@ -71,7 +71,7 @@ const EmployeesList: React.FC = () => {
                 <p>{exam.employee.name}</p>
                 <p>{exam.type.name}</p>
                 <p>{exam.category.name}</p>
-                <p>{exam.dueDate}</p>
+                <p>{format(new Date(exam.dueDate), 'dd/MM/yyyy')}</p>
                 <MdChevronRight size="24" />
               </div>
             ))
