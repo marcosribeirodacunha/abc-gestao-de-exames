@@ -105,8 +105,8 @@ const ExamsCreate: React.FC = () => {
           toast.error(
             'Um erro inexperado ocorreu. Por favor, tente mais tarde!'
           );
-          setIsCreating(false);
         }
+        setIsCreating(false);
       }
     },
     []
