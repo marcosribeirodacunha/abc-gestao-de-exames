@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { toast } from 'react-toastify';
 
 import { FormHandles, SubmitHandler } from '@unform/core';
@@ -19,6 +19,20 @@ const Login: React.FC = () => {
   const { signIn } = useAuth();
 
   const formRef = useRef<FormHandles>(null);
+
+  useEffect(() => {
+    toast(
+      <div style={{ fontSize: '14px' }}>
+        <p style={{ marginBottom: '8px' }}>
+          Para acessar a plataforma utilize os seguintes dados:
+        </p>
+        E-mail: <strong>admin@email.com</strong> ou <br />
+        Matrícula: <strong>00000000</strong> <br />
+        Senha: <strong>admin</strong> <br />
+      </div>,
+      { position: 'top-center', autoClose: false }
+    );
+  }, []);
 
   const handleSubmit: SubmitHandler<FormData> = useCallback(
     async data => {
