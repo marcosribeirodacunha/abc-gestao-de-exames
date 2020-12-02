@@ -1,46 +1,111 @@
-# Getting Started with Create React App
+<h1 align="center">
+  <br />
+  <img alt="ABC Logo" src="./github/logo.svg" width="200px" />
+</h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h4 align="center">A empresa ABC é software de gestão de exames no qual é possivel realizar o cadastro e filtragem dos exames realizados pelos funcionarios da empresa</h4>
 
-## Available Scripts
+<p align="center">
+  <img alt="Linguagem mais usada" src="https://img.shields.io/github/languages/top/marcosribeirodacunha/aurora-events?style=flat">
 
-In the project directory, you can run:
+  <img alt="Objetivo: estudo" src="https://img.shields.io/badge/purpose-study-lightgrey?style=flat">
 
-### `yarn start`
+  <img alt="Netlify Status" src="https://api.netlify.com/api/v1/badges/6ba2cfed-7529-469d-ba90-231a97901405/deploy-status">
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+  <img alt="GitHub" src="https://img.shields.io/github/license/marcosribeirodacunha/abc-gestao-de-exames">
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  <img alt="Eslint" src="https://img.shields.io/badge/dynamic/json?label=eslint&query=%24.devDependencies.eslint&url=https%3A%2F%2Fraw.githubusercontent.com%2Fmarcosribeirodacunha%2Fabc-gestao-de-exames%2Fmaster%2Fpackage.json&logo=eslint&color=4b32c3">
 
-### `yarn test`
+  <img alt="Prettier" src="https://img.shields.io/badge/dynamic/json?label=prettier&query=%24.devDependencies.prettier&url=https%3A%2F%2Fraw.githubusercontent.com%2Fmarcosribeirodacunha%2Fabc-gestao-de-exames%2Fmaster%2Fpackage.json&color=f7b93e&logo=prettier">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  <img alt="Code style: Airbnb" src="https://img.shields.io/badge/code%20style-airbnb-ff5a5f" />
+</p>
 
-### `yarn build`
+<p align="center">
+  <a href="https://abc-gestao-de-exames.netlify.app">
+    <img alt="Website" src="https://img.shields.io/badge/website-abc gestão de exames-00c7b7?style=for-the-badge&logo=netlify">
+  </a>
+</p>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+<p align="center">
+  <a href="#-recursos">Recursos</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-instalação">Instalação</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-tecnologias">Tecnologias</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#-licença">Licença</a>
+</p>
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<p align="center">
+  <img src="./github/exams_list_mockup.png" alt="ABC - exams list page" width="100%">
+</p>
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🗃 Recursos
 
-### `yarn eject`
+- [x] Login com matricula ou email
+- [x] Listagem dos exames a vencer no periodo de um mês a partir do dia atual
+- [x] Criação, listagem, atualização e deleção.
+  - [x] Cargos para funcionários
+  - [x] Tipos de exames
+  - [x] Categorias de exames
+  - [x] Funcionários
+  - [x] Exames
+- [x] Listagem dinâmica de funcionários com diferentes filtros:
+  - [x] Nome do funcionário
+  - [x] Matrícula
+  - [x] Função
+- [x] Listagem dinâmica de exames com diferentes filtros:
+  - [x] Nome do funcionário
+  - [x] Matrícula
+  - [x] Função
+  - [x] Tipo do exame
+  - [x] Categoria do exame
+  - [x] Validade
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Obs.: Esta aplicação **NÃO** é responsiva.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## ⚙ Instalação
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Para clonar e executar esta aplicação é necessário possuir instalado [Git](https://git-scm.com/) e [NodeJS](https://nodejs.org/en/download/) (que instala também o [npm](https://www.npmjs.com/)). Em sua linha de comando:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```bash
+# Clone o repositório
+$ git clone https://github.com/marcosribeirodacunha/abc-gestao-de-exames.git
 
-## Learn More
+# Entre no repositório
+$ cd abc-gestao-de-exames
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# Instale as dependências
+$ yarn
+// ou npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### ❗ Importante
+
+Para que todas as funcionalidades da aplicação funcionem normalmente clone, instale e inicie a API desta aplicação, que está localizada em: [abc-gestao-de-exames-api](https://github.com/marcosribeirodacunha/abc-gestao-de-exames-api).
+
+Após iniciar a API renomeie o arquivo `.env.example` para `.env` e modifique, a variável REACT_APP_API_URL com a url da API. (Caso esteja executando a aplicação localmente, pode não ser necessário realizar esta modificação).
+
+Para iniciar a aplicação execute os seguintes comandos dentro do diretorio raiz:
+
+```bash
+$ yarn start
+// ou npm start
+```
+
+## 👨🏽‍💻 Tecnologias
+
+- [ReactJS](https://pt-br.reactjs.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [React-Router](https://reactrouter.com/web/guides/quick-start)
+- [Styled Components](https://styled-components.com/)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [Axios](https://github.com/axios/axios)
+- [Lodash](https://lodash.com/)
+- [React Select](https://react-select.com/home)
+- [React Datepicker](https://reactdatepicker.com/)
+- [ESlint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [EditorConfig](https://editorconfig.org/)
+
+## 📜 Licença
+
+Esse projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
